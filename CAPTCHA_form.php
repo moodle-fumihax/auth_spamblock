@@ -15,8 +15,4 @@ class captcha_form extends moodleform {
 
         $this->add_action_buttons(false,"認証");
     }
-
-    function validation($data, $files) {
-        return array();
-    }
 }

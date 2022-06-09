@@ -5,8 +5,7 @@ require_once($CFG->libdir.'/authlib.php');
 require_once($CFG->libdir.'/pagelib.php');
 require_once($CFG->dirroot."/config.php");
 
-class auth_plugin_spam_block_beta extends auth_plugin_base{
-    
+class auth_plugin_spamblockbeta extends auth_plugin_base{
 
     function user_login($username, $password) {
         global $CFG, $DB;
@@ -23,28 +22,30 @@ class auth_plugin_spam_block_beta extends auth_plugin_base{
             echo "CFG[$key] =>".$val."<br>";
         }
         */
+        /*
+        foreach ($user as $key => $val){
+            echo "user[$key] =>".$val."<br>";
+        }
+        */
         require_once("CAPTCHA_form.php");
         $capform = new captcha_form(null);
-
-        if($ans = $capform->get_data()){
-            foreach ($ans as $key => $val){
-                echo "ans[$key] =>".$val."<br>";
+        if($data = $capform->get_data()){
+            foreach ($data as $key => $val){
+                echo "data[$key] =>".$val."<br>";
             }
-            die();
             //$this->signup($user, $notify = true);
+        }else{
+            //ページを整える
+            $PAGE->navbar->add("TEST");
+            $PAGE->set_pagelayout("login");
+            $PAGE->set_title("CAPTCHA");
+            $PAGE->set_heading("CAPTCHA_PAGE");
+            echo $OUTPUT->header();
+            //フォーム表示
+            $capform->display();
+            echo $OUTPUT->footer();
         }
-
-        //ページを整える
-        $PAGE->navbar->add("TEST");
-        $PAGE->set_pagelayout("login");
-        $PAGE->set_title("CAPTCHA");
-        $PAGE->set_heading("CAPTCHA_PAGE");
-        echo $OUTPUT->header();
-        echo $OUTPUT->box_start();
-        //フォーム表示
-        $capform->display();
-        echo $OUTPUT->box_end();
-
+        //$this->signup($user,$notify);
     }
 
     function signup($user, $notify = true){

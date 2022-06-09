@@ -1,4 +1,4 @@
 <?php
-$plugin->component = "auth_spam_block_beta";
+$plugin->component = "auth_spamblockbeta";
 $plugin->version = 2022042800;
 ?>
