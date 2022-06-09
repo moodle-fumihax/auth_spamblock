@@ -1,0 +1,2 @@
+# spam_block_beta
+moodleのEメールによる自己登録スパムを防ぐためのプラグイン
