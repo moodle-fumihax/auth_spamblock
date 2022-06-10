@@ -1,6 +1,6 @@
 <?php
 
-$string['pluginname'] = "スパムブロックβ";
-$string['antispam'] = "ブロツク";
+$string["pluginname"] = "スパムブロックβ";
+$string["antispam"] = "ブロツク";
 
 ?>

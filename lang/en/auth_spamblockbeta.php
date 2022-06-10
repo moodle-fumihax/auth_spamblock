@@ -1,5 +1,5 @@
 <?php
 
-$string['pluginname'] = "spam_block_beta";
-$string['antispam'] = "BLOCK";
+$string["pluginname"] = "spam_block_beta";
+$string["antispam"] = "BLOCK";
 ?>
