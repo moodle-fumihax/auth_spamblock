@@ -6,6 +6,10 @@ require_once($CFG->dirroot."/config.php");
 
 class auth_plugin_spamblockbeta extends auth_plugin_base{
 
+    public function __construct() {
+        $this->authtype = "spamblockbeta";
+    }
+
     function user_login($username, $password) {
         global $CFG, $DB;
         if ($user = $DB->get_record("user", array("username"=>$username, "mnethostid"=>$CFG->mnet_localhost_id))) {
@@ -26,7 +30,8 @@ class auth_plugin_spamblockbeta extends auth_plugin_base{
             echo "user[$key] =>".$val."<br>";
         }
         */
-        $this->signup($user, $notify = true);
+        //$this->signup($user, $notify = true);
+        echo "auth";
     }
 
     function signup($user, $notify = true){
@@ -43,4 +48,3 @@ class auth_plugin_spamblockbeta extends auth_plugin_base{
 
 
 }
-?>

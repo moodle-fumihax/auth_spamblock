@@ -12,6 +12,6 @@ $options = array(
 
 $settings->add(new admin_setting_configselect("auth_spamblockbeta/captcha",
     new lang_string("auth_spamblockbetacaptcha","auth_spamblockbeta"),
-    "有効無効",0,$options
+    "有効無効",1,$options,
 ));
 
