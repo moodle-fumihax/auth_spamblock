@@ -4,7 +4,7 @@ function xmldb_auth_spamblockbeta_upgrade($oldversion): bool {
 
     $dbman = $DB->get_manager(); // Loads ddl manager and xmldb classes.
 
-    if ($oldversion < 2022061207) {
+    if ($oldversion < 2022061208) {
 
         // Define table auth_spamblockbeta to be created.
         $table = new xmldb_table('auth_spamblockbeta');
@@ -12,7 +12,8 @@ function xmldb_auth_spamblockbeta_upgrade($oldversion): bool {
         // Adding fields to table auth_spamblockbeta.
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $table->add_field('logintoken', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
-        $table->add_field('answer', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
+        $table->add_field('currentanswer', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
+        $table->add_field('nextanswer', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
 
         // Adding keys to table auth_spamblockbeta.
         $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
@@ -27,7 +28,7 @@ function xmldb_auth_spamblockbeta_upgrade($oldversion): bool {
         }
 
         // Spamblockbeta savepoint reached.
-        upgrade_plugin_savepoint(true, 2022061207 , 'auth', 'spamblockbeta');
+        upgrade_plugin_savepoint(true, 2022061208 , 'auth', 'spamblockbeta');
     }
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="auth/spamblockbeta/db" VERSION="20220704" COMMENT="XMLDB file for Moodle auth/spamblockbeta"
+<XMLDB PATH="auth/spamblockbeta/db" VERSION="20220705" COMMENT="XMLDB file for Moodle auth/spamblockbeta"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -8,7 +8,8 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="logintoken" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="answer" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="currentanswer" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="nextanswer" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
