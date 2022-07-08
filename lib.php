@@ -3,17 +3,20 @@
 defined("MOODLE_INTERNAL") || die();
 
 function auth_spamblockbeta_extend_signup_form($mform){
-    global $SESSION,$DB;
+    global $SESSION,$DB,$CFG;
     $config = get_config("auth_spamblockbeta");
     
     if ($config->captcha==0){
+        //直接ログインページにアクセスすることを禁止
+        if (!isset($_SERVER["HTTP_REFERER"])){
+            $page = $CFG->wwwroot."/login/index.php";
+            redirect($page);
+        }
+        //ここから答えの生成、描画処理
         $token = $SESSION->logintoken["core_auth_login"]["token"];
         $answer = null;
-        $nofirst = $DB->record_exists_sql("SELECT id FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
-        //フォームの再生成のみ（logintokenが変わらずにページの更新などがされた場合）がされたかどうかをチェック
-        $nowans = $DB->get_record_sql("SELECT currentanswer,nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
-        $donereforming = strcmp($nowans->currentanswer,$nowans->nextanswer);//値が0の場合は同じ文字列
-        if(!$nofirst){//初回かどうか
+        $exists = $DB->record_exists_sql("SELECT id FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
+        if(!$exists){//初アクセス（セッション）かどうか
             //答えを生成
             $alphabets = range("A","Z");
             for ($i=0;$i<5;$i++){
@@ -25,14 +28,26 @@ function auth_spamblockbeta_extend_signup_form($mform){
             $obj->logintoken = $token;
             $obj->currentanswer = $answer;
             //次の分の答えも生成
-            $answer = null;
-            for ($i=0;$i<5;$i++){
-                $answer .= $alphabets[rand(0,count($alphabets)-1)];
-            }
             $obj->nextanswer = $answer;
             //レコードを挿入
             $DB->insert_record("auth_spamblockbeta",$obj,False);
-
+        //ページの再生成のみが行われたかどうか
+        }elseif(strcmp($_SERVER["HTTP_REFERER"],$CFG->wwwroot."/login/signup.php?")!=0 && strcmp($_SERVER["HTTP_REFERER"],$CFG->wwwroot."/login/signup.php")!=0){
+            //答えを生成
+            $alphabets = range("A","Z");
+            for ($i=0;$i<5;$i++){
+                $answer .= $alphabets[rand(0,count($alphabets)-1)];
+            }
+            //答えを格納
+            //update_record用のdataobjectの作成
+            $obj = new stdClass();
+            //idを取得（update_recordに必要なため）
+            $id = $DB->get_record_sql("SELECT id FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
+            $obj->id = $id->id;
+            $obj->currentanswer = $answer;
+            $obj->nextanswer = $answer;
+            //答えを更新
+            $DB->update_record("auth_spamblockbeta",$obj);
         }else{
             //答えを生成
             $alphabets = range("A","Z");
@@ -40,27 +55,19 @@ function auth_spamblockbeta_extend_signup_form($mform){
                 $answer .= $alphabets[rand(0,count($alphabets)-1)];
             }
             //答えを格納
-            //insert_record用のdataobjectの作成
-            //答えを更新
-            //idを取得（update_recordに必要なため）
-            $token = $SESSION->logintoken["core_auth_login"]["token"];
-            $id = $DB->get_record_sql("SELECT id FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
+            //update_record用のdataobjectの作成
             $obj = new stdClass();
+            //idを取得（update_recordに必要なため）
+            $id = $DB->get_record_sql("SELECT id FROM {auth_spamblockbeta} WHERE logintoken = \"$token\""); 
             $obj->id = $id->id;
             $obj->nextanswer = $answer;
+            //答えを更新
             $DB->update_record("auth_spamblockbeta",$obj);
-
         }
-        
         //要素追加
         $mform->addElement("header","CAPTCHA",new lang_string("auth_spamblockbetacaptchaheader","auth_spamblockbeta"));
-        if(!$nofirst||$donereforming!=0){//初回もしくはページの再生成のみがされたかどうか
-            $answer = $DB->get_record_sql("SELECT currentanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
-            $mform->addElement("static","nolobot",new lang_string("auth_spamblockbetacaptchadescriptionbefore","auth_spamblockbeta").$answer->currentanswer.new lang_string("auth_spamblockbetacaptchadescriptionafter","auth_spamblockbeta"));
-        }else{
-            $answer = $DB->get_record_sql("SELECT nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
-            $mform->addElement("static","nolobot",new lang_string("auth_spamblockbetacaptchadescriptionbefore","auth_spamblockbeta").$answer->nextanswer.new lang_string("auth_spamblockbetacaptchadescriptionafter","auth_spamblockbeta"));
-        }
+        $answer = $DB->get_record_sql("SELECT nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
+        $mform->addElement("static","nolobot",new lang_string("auth_spamblockbetacaptchadescriptionbefore","auth_spamblockbeta").$answer->nextanswer.new lang_string("auth_spamblockbetacaptchadescriptionafter","auth_spamblockbeta"));
         $mform->addElement("text","useranswer",new lang_string("auth_spamblockbetacaptchafield","auth_spamblockbeta"));
         $mform->addRule("useranswer",get_string("required"), "required");
         $mform->setType("useranswer", PARAM_TEXT);
