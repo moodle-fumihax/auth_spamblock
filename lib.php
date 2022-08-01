@@ -5,7 +5,7 @@ defined("MOODLE_INTERNAL") || die();
 function auth_spamblockbeta_extend_signup_form($mform){
     global $SESSION,$DB,$CFG;
     $config = get_config("auth_spamblockbeta");
-    
+
     if ($config->captcha==0){
         //直接ログインページにアクセスすることを禁止
         if (!isset($_SERVER["HTTP_REFERER"])){
@@ -64,10 +64,13 @@ function auth_spamblockbeta_extend_signup_form($mform){
             //答えを更新
             $DB->update_record("auth_spamblockbeta",$obj);
         }
+        //画像生成処理
+        $answer = $DB->get_record_sql("SELECT nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
+        $img = \auth_spamblockbeta\gen_captcha::gen_image($answer->nextanswer);
         //要素追加
         $mform->addElement("header","CAPTCHA",new lang_string("auth_spamblockbetacaptchaheader","auth_spamblockbeta"));
-        $answer = $DB->get_record_sql("SELECT nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
-        $mform->addElement("static","nolobot",new lang_string("auth_spamblockbetacaptchadescriptionbefore","auth_spamblockbeta").$answer->nextanswer.new lang_string("auth_spamblockbetacaptchadescriptionafter","auth_spamblockbeta"));
+        $mform->addElement("static","nolobot",new lang_string("auth_spamblockbetacaptchadescription","auth_spamblockbeta"));
+        $mform->addElement("html","<img src=\"data:image/png;base64,".$img."\"><br><br>");
         $mform->addElement("text","useranswer",new lang_string("auth_spamblockbetacaptchafield","auth_spamblockbeta"));
         $mform->addRule("useranswer",get_string("required"), "required");
         $mform->setType("useranswer", PARAM_TEXT);
