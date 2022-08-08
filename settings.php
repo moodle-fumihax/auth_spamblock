@@ -5,14 +5,11 @@ defined("MOODLE_INTERNAL") || die;
 $settings->add(new admin_setting_heading("auth_spamblockbeta/pluginname", "",
     new lang_string("auth_spamblockbetadescription", "auth_spamblockbeta")));
 
-$options = array(
-    new lang_string("yes"),
-    new lang_string("no"),
-);
+$answer_length_options = range(1,10);
 
-$settings->add(new admin_setting_configselect("auth_spamblockbeta/captcha",
-    new lang_string("auth_spamblockbetacaptcha","auth_spamblockbeta"),
-    new lang_string("auth_spamblockbetacaptchaswitchdescription","auth_spamblockbeta"),
-    0,$options,
+$settings->add(new admin_setting_configselect("auth_spamblockbeta/answerlength",
+    new lang_string("auth_spamblockbetaanswerlength","auth_spamblockbeta"),
+    new lang_string("auth_spamblockbetaanswerlengthdescription","auth_spamblockbeta"),
+    4,$answer_length_options
 ));
 

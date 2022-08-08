@@ -15,11 +15,12 @@ class gen_captcha{
 
         $alphabets = range("A","Z");
         $answer_array = str_split($answer);
+        $answer_length = count($answer_array)-1;
 
         //$ox = array_search($answer_array[0],$alphabets) * 40;
         //$alphabets_img = imagesetclip($alphabets_img,$ox,0,$ox+39,39);
 
-        $width = 48*4+40;
+        $width = 48*$answer_length+40;
         $result = imagecreatetruecolor($width,40);
         //アルファチャンネルを保存するための処理群
         //ブレンドモードを無効にする
