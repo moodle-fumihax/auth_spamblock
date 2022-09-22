@@ -67,10 +67,13 @@ function auth_spamblockbeta_extend_signup_form($mform){
     //画像生成処理
     $answer = $DB->get_record_sql("SELECT nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
     $img = \auth_spamblockbeta\gen_captcha::gen_image($answer->nextanswer);
+    $script = \auth_spamblockbeta\gen_captcha::return_javascript();
     //要素追加
     $mform->addElement("header","CAPTCHA",new lang_string("auth_spamblockbetacaptchaheader","auth_spamblockbeta"));
     $mform->addElement("static","nolobot",new lang_string("auth_spamblockbetacaptchadescription","auth_spamblockbeta"));
-    $mform->addElement("html","<img src=\"data:image/png;base64,".$img."\"><br><br>");
+    $mform->addElement("html","<script type=\"text/javascript\">".$script."</script>");
+    $mform->addElement("html","<img src=\"data:image/png;base64,".$img["base"]."\" cmanOMat=\"move\"><br><br>");
+    $mform->addElement("html","<img src=\"data:image/png;base64,".$img["cover"]."\" cmanOMat=\"move\"><br><br>");
     $mform->addElement("text","useranswer",new lang_string("auth_spamblockbetacaptchafield","auth_spamblockbeta"));
     $mform->addRule("useranswer",get_string("required"), "required");
     $mform->setType("useranswer", PARAM_TEXT);
