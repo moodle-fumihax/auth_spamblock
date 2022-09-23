@@ -111,7 +111,7 @@ class gen_captcha{
             $width+=$tmp;
         }
         //欠損画像の空白幅をランダムに決定する
-        for($i=0;$i<$answer_length;$i++){
+        for($i=0;$i<$answer_length+1;$i++){
             $tmp = mt_rand(4,16);
             $spaces[] = $tmp;
             $width+=$tmp;
