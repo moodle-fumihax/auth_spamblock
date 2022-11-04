@@ -13,3 +13,12 @@ $settings->add(new admin_setting_configselect("auth_spamblockbeta/answerlength",
     4,$answer_length_options
 ));
 
+$options = array(
+    new lang_string("no"),
+    new lang_string("yes"),
+);
+
+$settings->add(new admin_setting_configselect("auth_spamblockbeta/performancetest",
+    new lang_string("auth_spamblockbetaperformancetest","auth_spamblockbeta"),
+    new lang_string("auth_spamblockbetaperformancetestdescription","auth_spamblockbeta"),0,$options
+));

@@ -77,6 +77,10 @@ function auth_spamblockbeta_extend_signup_form($mform){
     $mform->addElement("text","useranswer",new lang_string("auth_spamblockbetacaptchafield","auth_spamblockbeta"));
     $mform->addRule("useranswer",get_string("required"), "required");
     $mform->setType("useranswer", PARAM_TEXT);
+    //性能試験のための表示
+    if ($config->performancetest == 1){
+        $mform->addElement("static","answer",$answer->nextanswer);
+    }
 }
 
 function auth_spamblockbeta_validate_extend_signup_form($data){
@@ -87,7 +91,8 @@ function auth_spamblockbeta_validate_extend_signup_form($data){
     $answer = $DB->get_record_sql("SELECT currentanswer,nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
     //ユーザの回答と比較
     if (strcmp($data["useranswer"],$answer->currentanswer) != 0){
-        $errors["useranswer"] = new lang_string("auth_spamblockbetacaptchaanswererror","auth_spamblockbeta")."you:".$data["useranswer"]." ans:".$answer->currentanswer;
+        //$errors["useranswer"] = new lang_string("auth_spamblockbetacaptchaanswererror","auth_spamblockbeta")."you:".$data["useranswer"]." ans:".$answer->currentanswer;
+        $errors["useranswer"] = new lang_string("auth_spamblockbetacaptchaanswererror","auth_spamblockbeta");
         //答えを更新
         //nextanswerの値をcurrentanswerに格納
         //idを取得（update_recordに必要なため）

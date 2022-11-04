@@ -8,3 +8,5 @@ $string["auth_spamblockbetacaptchaheader"] = "CAPTCHA Authentication";
 $string["auth_spamblockbetacaptchadescription"] = "If you are not a lobot, type image words.(You can move the image by dragging.)";
 $string["auth_spamblockbetacaptchafield"] = "Answer";
 $string["auth_spamblockbetacaptchaanswererror"] = "Please try again.";
+$string["auth_spamblockbetaperformancetest"] = "performance test mode";
+$string["auth_spamblockbetaperformancetestdescription"] = "This mode is for testing against OCR. <font color=red>Never enable</font> this mode for normal use.";
