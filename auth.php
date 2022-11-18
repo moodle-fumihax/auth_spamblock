@@ -30,8 +30,8 @@ class auth_plugin_spamblockbeta extends auth_plugin_base{
             echo "user[$key] =>".$val."<br>";
         }
         */
-        //$this->signup($user, $notify = true);
-        echo "auth";
+        $this->signup($user, $notify = true);
+        //echo "auth";
     }
 
     function signup($user, $notify = true){
