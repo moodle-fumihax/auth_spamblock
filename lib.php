@@ -90,7 +90,7 @@ function auth_spamblockbeta_validate_extend_signup_form($data){
     //答えを取得
     $answer = $DB->get_record_sql("SELECT currentanswer,nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
     //ユーザの回答と比較
-    if (strcmp($data["useranswer"],$answer->currentanswer) != 0){
+    if (strcasecmp($data["useranswer"],$answer->currentanswer) != 0){//大文字小文字を区別しない
         //$errors["useranswer"] = new lang_string("auth_spamblockbetacaptchaanswererror","auth_spamblockbeta")."you:".$data["useranswer"]." ans:".$answer->currentanswer;
         $errors["useranswer"] = new lang_string("auth_spamblockbetacaptchaanswererror","auth_spamblockbeta");
         //答えを更新
