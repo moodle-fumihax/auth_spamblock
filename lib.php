@@ -70,7 +70,7 @@ function auth_spamblockbeta_extend_signup_form($mform){
     $script = \auth_spamblockbeta\gen_captcha::return_javascript();
     //要素追加
     $mform->addElement("header","CAPTCHA",new lang_string("auth_spamblockbetacaptchaheader","auth_spamblockbeta"));
-    $mform->addElement("static","nolobot",new lang_string("auth_spamblockbetacaptchadescription","auth_spamblockbeta"));
+    $mform->addElement("static","nolobot","",new lang_string("auth_spamblockbetacaptchadescription","auth_spamblockbeta"));
     $mform->addElement("html","<script type=\"text/javascript\">".$script."</script>");
     $mform->addElement("html","<img src=\"data:image/png;base64,".$img["base"]."\" cmanOMat=\"move\"><br><br>");
     $mform->addElement("html","<img src=\"data:image/png;base64,".$img["cover"]."\" cmanOMat=\"move\"><br><br>");
