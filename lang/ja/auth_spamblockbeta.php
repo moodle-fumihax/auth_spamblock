@@ -9,4 +9,14 @@ $string["auth_spamblockbetacaptchadescription"] = "ロボットでないなら�
 $string["auth_spamblockbetacaptchafield"] = "回答";
 $string["auth_spamblockbetacaptchaanswererror"] = "もう一度やり直してください。";
 $string["auth_spamblockbetaperformancetest"] = "性能試験モード";
-$string["auth_spamblockbetaperformancetestdescription"] = "OCRに対する試験用のモードです。通常使用では<font color=red>絶対に</font>有効にしないでください。";
+$string["auth_spamblockbetaperformancetestdescription"] = "性能試験用のモードです。通常使用では<font color=red>絶対に</font>有効にしないでください。";
+$string["auth_spamblockbetadirectaccess"] = "ユーザ作成画面への直接アクセス有効化";
+$string["auth_spamblockbetadirectaccessdescription"] = "ユーザ作成画面への直接のアクセスを有効化します。";
+$string["auth_spamblockbetaviewanswer"] ="正解を表示";
+$string["auth_spamblockbetaviewanswerdescription"] = "CAPTCHA画面に正解を表示します。";
+$string["auth_spamblockbetanobreak"] = "欠損処理を行わない";
+$string["auth_spamblockbetanobreakdescription"] = "欠損処理を行いません。";
+$string["auth_spamblockbetanonoise"] = "反転ノイズ重畳を含まない";
+$string["auth_spamblockbetanonoisedescription"] = "反転ノイズ重畳を含まない画像を生成します。";
+$string["auth_spamblockbetanorandomspace"] = "文字幅・間隔不均一化をしない";
+$string["auth_spamblockbetanorandomspacedescription"] = "文字幅・間隔不均一化の処理をしません。";

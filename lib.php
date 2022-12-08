@@ -7,10 +7,12 @@ function auth_spamblockbeta_extend_signup_form($mform){
     $config = get_config("auth_spamblockbeta");
 
     //直接ログインページにアクセスすることを禁止
-    if (!isset($_SERVER["HTTP_REFERER"])){
-        $page = $CFG->wwwroot."/login/index.php";
-        redirect($page);
-    }
+    if($config->directaccess == 0){
+        if (!isset($_SERVER["HTTP_REFERER"])){
+            $page = $CFG->wwwroot."/login/index.php";
+            redirect($page);
+        }
+    }   
     //ここから答えの生成、描画処理
     $token = $SESSION->logintoken["core_auth_login"]["token"];
     $answer = null;
@@ -66,7 +68,7 @@ function auth_spamblockbeta_extend_signup_form($mform){
     }
     //画像生成処理
     $answer = $DB->get_record_sql("SELECT nextanswer FROM {auth_spamblockbeta} WHERE logintoken = \"$token\"");
-    $img = \auth_spamblockbeta\gen_captcha::gen_image($answer->nextanswer);
+    $img = \auth_spamblockbeta\gen_captcha::gen_image($answer->nextanswer,$config);
     $script = \auth_spamblockbeta\gen_captcha::return_javascript();
     //要素追加
     $mform->addElement("header","CAPTCHA",new lang_string("auth_spamblockbetacaptchaheader","auth_spamblockbeta"));
@@ -78,7 +80,7 @@ function auth_spamblockbeta_extend_signup_form($mform){
     $mform->addRule("useranswer",get_string("required"), "required");
     $mform->setType("useranswer", PARAM_TEXT);
     //性能試験のための表示
-    if ($config->performancetest == 1){
+    if ($config->viewanswer == 1){
         $mform->addElement("static","answer",$answer->nextanswer);
     }
 }
