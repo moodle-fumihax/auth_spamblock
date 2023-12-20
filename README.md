@@ -1,4 +1,4 @@
-# spam_block_beta
+# spam_block
 moodleのEメールによる自己登録スパムを防ぐためのプラグイン
 
 ## 動作環境
