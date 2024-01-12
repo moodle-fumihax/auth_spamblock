@@ -1,6 +1,6 @@
 <?php
 
-namespace auth_spamblockbeta;
+namespace auth_spamblock;
 
 class gen_captcha{
     public static function gen_image($answer,$config){

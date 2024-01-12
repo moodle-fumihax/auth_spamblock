@@ -4,10 +4,10 @@ defined("MOODLE_INTERNAL") || die();
 require_once($CFG->libdir."/authlib.php");
 require_once($CFG->dirroot."/config.php");
 
-class auth_plugin_spamblockbeta extends auth_plugin_base{
+class auth_plugin_spamblock extends auth_plugin_base{
 
     public function __construct() {
-        $this->authtype = "spamblockbeta";
+        $this->authtype = "spamblock";
     }
 
     function user_login($username, $password) {
