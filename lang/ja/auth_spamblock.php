@@ -1,6 +1,6 @@
 <?php
 
-$string["pluginname"] = "スパムブロックβ";
+$string["pluginname"] = "スパムブロック";
 $string["auth_spamblockdescription"] = "スパムユーザ防止プラグイン";
 $string["auth_spamblockanswerlength"] = "CAPTCHA認証時の答えの長さ設定";
 $string["auth_spamblockanswerlengthdescription"] = "CAPTCHA認証時の答えの長さを設定します。\n通常は5文字がおすすめです。";
