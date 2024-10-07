@@ -13,3 +13,6 @@ mysql 8.0.25
 # git clone https://github.com/moodle-fumihax/auth_spamblock.git spamblock
 # chown -R apache: spamblock
 ```
+
+## 設定
+- サイト管理 － プラグイン － 認証 ― 認証管理 － 自己登録
