@@ -8,6 +8,8 @@ mysql 8.0.25
 > データベースが`postgresql`の場合動作しません.
 
 ## インストール
-cd <moodle directory>/auth
-git clone https://github.com/j19201/spamblockbeta.git spamblock
-chown -R apache: spamblock
+```
+# cd <moodle directory>/auth
+# git clone https://github.com/moodle-fumihax/auth_spamblock.git spamblock
+# chown -R apache: spamblock
+```
